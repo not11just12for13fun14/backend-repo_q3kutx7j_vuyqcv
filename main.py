@@ -14,10 +14,11 @@ from schemas import User as UserSchema, Session as SessionSchema, Shift as Shift
 
 app = FastAPI(title="Bakery Workforce Management API")
 
+# CORS: since we use bearer tokens (no cookies), we do not need credentials
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
-    allow_credentials=True,
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )

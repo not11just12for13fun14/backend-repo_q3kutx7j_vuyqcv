@@ -57,25 +57,42 @@ def verify_password(password: str, password_hash: str) -> bool:
 # -------------------- Startup seeding --------------------
 @app.on_event("startup")
 def ensure_admin_user():
+    """
+    Ensure there is an admin user with credentials from environment variables.
+    - If no user with ADMIN_USERNAME exists, create it with ADMIN_PASSWORD.
+    - If it exists, force-sync its password and flags (is_admin, active).
+    Also clears existing sessions for that user to prevent stale tokens.
+    """
     try:
-        existing_admin = db["user"].find_one({"is_admin": True})
-        if not existing_admin:
-            username = os.getenv("ADMIN_USERNAME", "admin")
-            password = os.getenv("ADMIN_PASSWORD", "admin123")
+        username = os.getenv("ADMIN_USERNAME", "admin")
+        password = os.getenv("ADMIN_PASSWORD", "admin123")
+        full_name = os.getenv("ADMIN_FULL_NAME", "Администратор")
+
+        user = db["user"].find_one({"username": username})
+        if not user:
             user_doc = UserSchema(
                 username=username,
-                full_name=os.getenv("ADMIN_FULL_NAME", "Администратор"),
+                full_name=full_name,
                 role="admin",
                 is_admin=True,
                 password_hash=hash_password(password),
                 active=True
             )
-            db["user"].insert_one(user_doc.model_dump())
-            # also drop any stale sessions for safety
-            db["session"].delete_many({})
+            inserted = db["user"].insert_one(user_doc.model_dump())
+            db["session"].delete_many({"user_id": inserted.inserted_id})
             print("[startup] Default admin created:", username)
         else:
-            print("[startup] Admin user exists")
+            updates: Dict[str, Any] = {
+                "full_name": full_name,
+                "role": "admin",
+                "is_admin": True,
+                "active": True,
+                "password_hash": hash_password(password),
+            }
+            db["user"].update_one({"_id": user["_id"]}, {"$set": updates})
+            # clear this user's sessions
+            db["session"].delete_many({"user_id": user["_id"]})
+            print("[startup] Admin user synchronized with environment:", username)
     except Exception as e:
         print("[startup] Admin seed error:", e)
 
@@ -170,12 +187,23 @@ def test_database():
 def login(payload: LoginRequest):
     user = db["user"].find_one({"username": payload.username})
     if not user or not verify_password(payload.password, user.get("password_hash", "")):
-        raise HTTPException(status_code=401, detail="Invalid credentials")
+        # As a safety net, attempt to re-sync admin if env creds used
+        admin_user = os.getenv("ADMIN_USERNAME", "admin")
+        admin_pass = os.getenv("ADMIN_PASSWORD", "admin123")
+        if payload.username == admin_user and payload.password == admin_pass:
+            # Force sync and reload user
+            ensure_admin_user()
+            user = db["user"].find_one({"username": admin_user})
+            if user and verify_password(payload.password, user.get("password_hash", "")):
+                pass
+            else:
+                raise HTTPException(status_code=401, detail="Invalid credentials")
+        else:
+            raise HTTPException(status_code=401, detail="Invalid credentials")
     if not user.get("active", True):
         raise HTTPException(status_code=403, detail="User is inactive")
     token = uuid.uuid4().hex
     expires = datetime.now(timezone.utc) + timedelta(days=7)
-    session_doc = SessionSchema(user_id=str(user["_id"]), token=token, expires_at=expires)
     db["session"].insert_one({
         "user_id": user["_id"],
         "token": token,

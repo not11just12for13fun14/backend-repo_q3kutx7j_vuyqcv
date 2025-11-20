@@ -54,6 +54,32 @@ def verify_password(password: str, password_hash: str) -> bool:
         return False
 
 
+# -------------------- Startup seeding --------------------
+@app.on_event("startup")
+def ensure_admin_user():
+    try:
+        existing_admin = db["user"].find_one({"is_admin": True})
+        if not existing_admin:
+            username = os.getenv("ADMIN_USERNAME", "admin")
+            password = os.getenv("ADMIN_PASSWORD", "admin123")
+            user_doc = UserSchema(
+                username=username,
+                full_name=os.getenv("ADMIN_FULL_NAME", "Администратор"),
+                role="admin",
+                is_admin=True,
+                password_hash=hash_password(password),
+                active=True
+            )
+            db["user"].insert_one(user_doc.model_dump())
+            # also drop any stale sessions for safety
+            db["session"].delete_many({})
+            print("[startup] Default admin created:", username)
+        else:
+            print("[startup] Admin user exists")
+    except Exception as e:
+        print("[startup] Admin seed error:", e)
+
+
 # -------------------- Auth dependencies --------------------
 class LoginRequest(BaseModel):
     username: str

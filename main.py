@@ -14,14 +14,24 @@ from schemas import User as UserSchema, Session as SessionSchema, Shift as Shift
 
 app = FastAPI(title="Bakery Workforce Management API")
 
-# CORS: since we use bearer tokens (no cookies), we do not need credentials
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=False,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+# ---------- CORS CONFIG ----------
+# Prefer explicit origin to satisfy browsers when Authorization header is used.
+FRONTEND_URL = os.getenv("FRONTEND_URL")  # optional explicit origin like https://example.com
+
+cors_kwargs: Dict[str, Any] = {
+    "allow_credentials": True,        # safe even if we don't use cookies; required by some browsers to echo origin
+    "allow_methods": ["*"],
+    "allow_headers": ["*"]
+}
+
+if FRONTEND_URL:
+    cors_kwargs["allow_origins"] = [FRONTEND_URL]
+else:
+    # Allow our Vite preview domain and localhost:3000
+    cors_kwargs["allow_origins"] = []
+    cors_kwargs["allow_origin_regex"] = r"^(https://.*-3000\..*\.modal\.host|http://localhost:3000)$"
+
+app.add_middleware(CORSMiddleware, **cors_kwargs)
 
 # -------------------- Helpers --------------------
 

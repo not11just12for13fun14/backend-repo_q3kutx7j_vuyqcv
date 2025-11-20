@@ -1,20 +1,19 @@
 INFO:     Will watch for changes in these directories: ['/home/workspace']
 INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
-INFO:     Started reloader process [579] using StatReload
-INFO:     Started server process [581]
+INFO:     Started reloader process [658] using StatReload
+INFO:     Started server process [660]
 INFO:     Waiting for application startup.
 INFO:     Application startup complete.
 [startup] Admin user synchronized with environment: admin
-INFO:     172.20.0.1:49320 - "GET /api/auth/me HTTP/1.1" 401 Unauthorized
-INFO:     172.20.0.1:49320 - "GET /api/auth/me HTTP/1.1" 401 Unauthorized
-INFO:     172.20.0.1:49348 - "HEAD / HTTP/1.1" 405 Method Not Allowed
-INFO:     172.20.0.1:49334 - "GET /api/auth/me HTTP/1.1" 401 Unauthorized
-INFO:     172.20.0.1:49334 - "GET /api/auth/me HTTP/1.1" 401 Unauthorized
-INFO:     172.20.0.1:49334 - "GET /api/auth/me HTTP/1.1" 401 Unauthorized
-INFO:     172.20.0.1:49334 - "GET /api/auth/me HTTP/1.1" 401 Unauthorized
-INFO:     172.20.0.1:49334 - "OPTIONS /api/auth/login HTTP/1.1" 200 OK
-INFO:     172.20.0.1:49374 - "POST /api/auth/login HTTP/1.1" 200 OK
-INFO:     172.20.0.1:49374 - "GET /api/auth/me HTTP/1.1" 500 Internal Server Error
+INFO:     172.20.0.1:35722 - "HEAD / HTTP/1.1" 405 Method Not Allowed
+INFO:     172.20.0.1:35738 - "GET /api/auth/me HTTP/1.1" 401 Unauthorized
+INFO:     172.20.0.1:35738 - "GET /api/auth/me HTTP/1.1" 401 Unauthorized
+INFO:     172.20.0.1:35746 - "GET /api/auth/me HTTP/1.1" 401 Unauthorized
+INFO:     172.20.0.1:35746 - "GET /api/auth/me HTTP/1.1" 401 Unauthorized
+INFO:     172.20.0.1:35756 - "GET /api/auth/me HTTP/1.1" 401 Unauthorized
+INFO:     172.20.0.1:35756 - "GET /api/auth/me HTTP/1.1" 401 Unauthorized
+INFO:     172.20.0.1:35756 - "POST /api/auth/login HTTP/1.1" 200 OK
+INFO:     172.20.0.1:35756 - "GET /api/auth/me HTTP/1.1" 500 Internal Server Error
 ERROR:    Exception in ASGI application
 Traceback (most recent call last):
   File "/usr/local/lib/python3.13/site-packages/uvicorn/protocols/http/h11_impl.py", line 408, in run_asgi
@@ -78,15 +77,14 @@ Traceback (most recent call last):
            ^^^^^^^^^^^^
   File "/usr/local/lib/python3.13/site-packages/anyio/_backends/_asyncio.py", line 807, in run
     result = context.run(func, *args)
-  File "/home/workspace/main.py", line 140, in get_current_user
+  File "/home/workspace/main.py", line 150, in get_current_user
     session = get_session_by_token(token)
-  File "/home/workspace/main.py", line 128, in get_session_by_token
+  File "/home/workspace/main.py", line 138, in get_session_by_token
     if session and session.get("expires_at") and session["expires_at"] < datetime.now(timezone.utc):
                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 TypeError: can't compare offset-naive and offset-aware datetimes
-INFO:     172.20.0.1:49358 - "OPTIONS /api/auth/login HTTP/1.1" 200 OK
-INFO:     172.20.0.1:49358 - "POST /api/auth/login HTTP/1.1" 200 OK
-INFO:     172.20.0.1:49358 - "GET /api/auth/me HTTP/1.1" 500 Internal Server Error
+INFO:     172.20.0.1:43024 - "POST /api/auth/login HTTP/1.1" 200 OK
+INFO:     172.20.0.1:43024 - "GET /api/auth/me HTTP/1.1" 500 Internal Server Error
 ERROR:    Exception in ASGI application
 Traceback (most recent call last):
   File "/usr/local/lib/python3.13/site-packages/uvicorn/protocols/http/h11_impl.py", line 408, in run_asgi
@@ -150,9 +148,9 @@ Traceback (most recent call last):
            ^^^^^^^^^^^^
   File "/usr/local/lib/python3.13/site-packages/anyio/_backends/_asyncio.py", line 807, in run
     result = context.run(func, *args)
-  File "/home/workspace/main.py", line 140, in get_current_user
+  File "/home/workspace/main.py", line 150, in get_current_user
     session = get_session_by_token(token)
-  File "/home/workspace/main.py", line 128, in get_session_by_token
+  File "/home/workspace/main.py", line 138, in get_session_by_token
     if session and session.get("expires_at") and session["expires_at"] < datetime.now(timezone.utc):
                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 TypeError: can't compare offset-naive and offset-aware datetimes

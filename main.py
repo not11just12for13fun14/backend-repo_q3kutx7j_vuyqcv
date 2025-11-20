@@ -2,7 +2,7 @@ import os
 from datetime import datetime, timedelta, timezone, date as date_cls
 import hashlib
 import uuid
-from typing import Optional, List, Dict, Any
+from typing import Optional, List, Dict, Any, Union
 
 from fastapi import FastAPI, HTTPException, Depends, Header
 from fastapi.middleware.cors import CORSMiddleware
@@ -19,7 +19,7 @@ app = FastAPI(title="Bakery Workforce Management API")
 FRONTEND_URL = os.getenv("FRONTEND_URL")  # optional explicit origin like https://example.com
 
 cors_kwargs: Dict[str, Any] = {
-    "allow_credentials": True,        # safe even if we don't use cookies; required by some browsers to echo origin
+    "allow_credentials": True,        # echo specific Origin when matched
     "allow_methods": ["*"],
     "allow_headers": ["*"]
 }
@@ -63,6 +63,29 @@ def verify_password(password: str, password_hash: str) -> bool:
         return hashlib.sha256((salt + password).encode()).hexdigest() == hashed
     except Exception:
         return False
+
+
+def _to_aware_utc(dt_value: Union[str, datetime]) -> Optional[datetime]:
+    """Coerce stored expires_at to timezone-aware UTC datetime.
+    Accepts ISO strings or datetime (naive or aware)."""
+    if dt_value is None:
+        return None
+    try:
+        if isinstance(dt_value, str):
+            # Normalize Z to +00:00 if present
+            iso = dt_value.replace("Z", "+00:00")
+            d = datetime.fromisoformat(iso)
+            if d.tzinfo is None:
+                d = d.replace(tzinfo=timezone.utc)
+            return d.astimezone(timezone.utc)
+        if isinstance(dt_value, datetime):
+            d = dt_value
+            if d.tzinfo is None:
+                d = d.replace(tzinfo=timezone.utc)
+            return d.astimezone(timezone.utc)
+    except Exception:
+        return None
+    return None
 
 
 # -------------------- Startup seeding --------------------
@@ -135,10 +158,13 @@ def get_session_by_token(token: str) -> Optional[Dict[str, Any]]:
     if not token:
         return None
     session = db["session"].find_one({"token": token})
-    if session and session.get("expires_at") and session["expires_at"] < datetime.now(timezone.utc):
-        # expired -> delete
-        db["session"].delete_one({"_id": session["_id"]})
-        return None
+    if session:
+        exp = _to_aware_utc(session.get("expires_at"))
+        now_utc = datetime.now(timezone.utc)
+        if exp and exp < now_utc:
+            # expired -> delete
+            db["session"].delete_one({"_id": session["_id"]})
+            return None
     return session
 
 

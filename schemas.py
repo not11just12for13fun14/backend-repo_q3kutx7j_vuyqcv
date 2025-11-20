@@ -1,48 +1,64 @@
 """
-Database Schemas
+Database Schemas for the Bakery Workforce Management App
 
-Define your MongoDB collection schemas here using Pydantic models.
-These schemas are used for data validation in your application.
+Each Pydantic model maps to a MongoDB collection (lowercased class name).
+Use these models for validation before inserting/updating documents.
 
-Each Pydantic model represents a collection in your database.
-Model name is converted to lowercase for the collection name:
-- User -> "user" collection
-- Product -> "product" collection
-- BlogPost -> "blogs" collection
+Note: To ensure maximum compatibility across runtimes, we use string fields
+for date/time values (ISO strings like YYYY-MM-DD, HH:MM, or ISO datetime).
 """
 
 from pydantic import BaseModel, Field
 from typing import Optional
 
-# Example schemas (replace with your own):
-
 class User(BaseModel):
     """
-    Users collection schema
-    Collection name: "user" (lowercase of class name)
+    Employees and admins
+    Collection: "user"
     """
-    name: str = Field(..., description="Full name")
-    email: str = Field(..., description="Email address")
-    address: str = Field(..., description="Address")
-    age: Optional[int] = Field(None, ge=0, le=120, description="Age in years")
-    is_active: bool = Field(True, description="Whether user is active")
+    username: str = Field(..., description="Unique login username")
+    full_name: str = Field(..., description="Employee full name")
+    role: str = Field(..., description="Position in bakery: baker | cashier | cleaner | admin")
+    is_admin: bool = Field(False, description="Has admin privileges")
+    password_hash: str = Field(..., description="SHA256 salted password hash")
+    active: bool = Field(True, description="Is the user active")
 
-class Product(BaseModel):
+class Session(BaseModel):
     """
-    Products collection schema
-    Collection name: "product" (lowercase of class name)
+    Active login sessions
+    Collection: "session"
     """
-    title: str = Field(..., description="Product title")
-    description: Optional[str] = Field(None, description="Product description")
-    price: float = Field(..., ge=0, description="Price in dollars")
-    category: str = Field(..., description="Product category")
-    in_stock: bool = Field(True, description="Whether product is in stock")
+    user_id: str = Field(..., description="Linked user _id as string")
+    token: str = Field(..., description="Session token (UUID4)")
+    expires_at: str = Field(..., description="Expiration timestamp ISO (UTC)")
 
-# Add your own schemas here:
-# --------------------------------------------------
+class Shift(BaseModel):
+    """
+    Work schedule entries
+    Collection: "shift"
+    """
+    user_id: str = Field(..., description="Employee id as string")
+    date: str = Field(..., description="Shift date (YYYY-MM-DD)")
+    start_time: str = Field(..., description="Shift start time (HH:MM)")
+    end_time: str = Field(..., description="Shift end time (HH:MM)")
+    note: Optional[str] = Field(None, description="Optional note")
 
-# Note: The Flames database viewer will automatically:
-# 1. Read these schemas from GET /schema endpoint
-# 2. Use them for document validation when creating/editing
-# 3. Handle all database operations (CRUD) directly
-# 4. You don't need to create any database endpoints!
+class TimeLog(BaseModel):
+    """
+    Clock-in/clock-out records
+    Collection: "timelog"
+    """
+    user_id: str = Field(..., description="Employee id as string")
+    date: str = Field(..., description="Date of work (YYYY-MM-DD)")
+    clock_in: str = Field(..., description="Clock in time ISO (UTC)")
+    clock_out: Optional[str] = Field(None, description="Clock out time ISO (UTC)")
+
+class Notification(BaseModel):
+    """
+    Important messages for employees
+    Collection: "notification"
+    """
+    title: str = Field(..., description="Title")
+    message: str = Field(..., description="Detail message")
+    level: str = Field("info", description="info | warning | critical")
+    audience: str = Field("all", description="all | role:<role> | user:<user_id>")

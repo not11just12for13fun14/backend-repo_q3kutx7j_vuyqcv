@@ -1,28 +1,95 @@
 INFO:     Will watch for changes in these directories: ['/home/workspace']
 INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
-INFO:     Started reloader process [740] using StatReload
-INFO:     Started server process [742]
+INFO:     Started reloader process [787] using StatReload
+INFO:     Started server process [789]
 INFO:     Waiting for application startup.
 INFO:     Application startup complete.
 [startup] Admin user synchronized with environment: admin
-INFO:     172.20.0.1:43512 - "GET /api/auth/me HTTP/1.1" 401 Unauthorized
-INFO:     172.20.0.1:43522 - "HEAD / HTTP/1.1" 405 Method Not Allowed
-INFO:     172.20.0.1:43512 - "GET /api/auth/me HTTP/1.1" 401 Unauthorized
-INFO:     172.20.0.1:43544 - "GET /api/auth/me HTTP/1.1" 401 Unauthorized
-INFO:     172.20.0.1:43544 - "GET /api/auth/me HTTP/1.1" 401 Unauthorized
-INFO:     172.20.0.1:43554 - "OPTIONS /api/auth/me HTTP/1.1" 200 OK
-INFO:     172.20.0.1:43554 - "OPTIONS /api/auth/me HTTP/1.1" 200 OK
-INFO:     172.20.0.1:43554 - "GET /api/auth/me HTTP/1.1" 401 Unauthorized
-INFO:     172.20.0.1:51236 - "GET /api/auth/me HTTP/1.1" 401 Unauthorized
-INFO:     172.20.0.1:51236 - "POST /api/auth/login HTTP/1.1" 200 OK
-INFO:     172.20.0.1:51236 - "GET /api/auth/me HTTP/1.1" 200 OK
-INFO:     172.20.0.1:57708 - "GET /api/auth/me HTTP/1.1" 401 Unauthorized
-INFO:     172.20.0.1:57708 - "GET /api/auth/me HTTP/1.1" 401 Unauthorized
-INFO:     172.20.0.1:57714 - "POST /api/auth/login HTTP/1.1" 200 OK
-INFO:     172.20.0.1:57714 - "GET /api/auth/me HTTP/1.1" 200 OK
-INFO:     172.20.0.1:57714 - "POST /api/auth/login HTTP/1.1" 200 OK
-INFO:     172.20.0.1:57714 - "GET /api/auth/me HTTP/1.1" 200 OK
-INFO:     172.20.0.1:57714 - "GET /api/auth/me HTTP/1.1" 200 OK
-INFO:     172.20.0.1:57714 - "GET /api/auth/me HTTP/1.1" 200 OK
-INFO:     172.20.0.1:57714 - "POST /api/auth/login HTTP/1.1" 200 OK
-INFO:     172.20.0.1:57714 - "GET /api/auth/me HTTP/1.1" 200 OK
+INFO:     172.20.0.1:48786 - "HEAD / HTTP/1.1" 405 Method Not Allowed
+INFO:     172.20.0.1:48794 - "GET /api/auth/me HTTP/1.1" 401 Unauthorized
+INFO:     172.20.0.1:48794 - "GET /api/auth/me HTTP/1.1" 401 Unauthorized
+INFO:     172.20.0.1:48794 - "POST /api/auth/login HTTP/1.1" 200 OK
+INFO:     172.20.0.1:48800 - "GET /api/auth/me HTTP/1.1" 401 Unauthorized
+INFO:     172.20.0.1:48794 - "GET /api/auth/me HTTP/1.1" 200 OK
+INFO:     172.20.0.1:48800 - "GET /api/auth/me HTTP/1.1" 401 Unauthorized
+INFO:     172.20.0.1:48794 - "OPTIONS /api/shifts?start=2025-11-20&end=2025-12-03 HTTP/1.1" 200 OK
+INFO:     172.20.0.1:48826 - "OPTIONS /api/shifts?start=2025-11-20&end=2025-12-03 HTTP/1.1" 200 OK
+INFO:     172.20.0.1:48814 - "GET /api/summary HTTP/1.1" 200 OK
+INFO:     172.20.0.1:48794 - "GET /api/shifts?start=2025-11-20&end=2025-12-03 HTTP/1.1" 200 OK
+INFO:     172.20.0.1:48814 - "GET /api/summary HTTP/1.1" 200 OK
+INFO:     172.20.0.1:48826 - "OPTIONS /api/users HTTP/1.1" 200 OK
+INFO:     172.20.0.1:48794 - "GET /api/shifts?start=2025-11-20&end=2025-12-03 HTTP/1.1" 200 OK
+INFO:     172.20.0.1:48814 - "OPTIONS /api/users HTTP/1.1" 200 OK
+INFO:     172.20.0.1:48826 - "OPTIONS /api/shifts HTTP/1.1" 200 OK
+INFO:     172.20.0.1:48794 - "OPTIONS /api/shifts HTTP/1.1" 200 OK
+INFO:     172.20.0.1:48814 - "GET /api/shifts HTTP/1.1" 200 OK
+INFO:     172.20.0.1:48826 - "GET /api/users HTTP/1.1" 200 OK
+INFO:     172.20.0.1:48826 - "GET /api/users HTTP/1.1" 200 OK
+INFO:     172.20.0.1:48814 - "GET /api/shifts HTTP/1.1" 200 OK
+INFO:     172.20.0.1:48814 - "GET /api/summary HTTP/1.1" 200 OK
+INFO:     172.20.0.1:48814 - "GET /api/summary HTTP/1.1" 200 OK
+INFO:     172.20.0.1:48814 - "GET /api/shifts?start=2025-11-20&end=2025-12-03 HTTP/1.1" 200 OK
+INFO:     172.20.0.1:48814 - "GET /api/shifts?start=2025-11-20&end=2025-12-03 HTTP/1.1" 200 OK
+INFO:     172.20.0.1:55610 - "GET /api/auth/me HTTP/1.1" 401 Unauthorized
+INFO:     172.20.0.1:55610 - "GET /api/auth/me HTTP/1.1" 401 Unauthorized
+INFO:     172.20.0.1:41982 - "GET /api/users HTTP/1.1" 200 OK
+INFO:     172.20.0.1:41986 - "GET /api/shifts HTTP/1.1" 200 OK
+INFO:     172.20.0.1:41982 - "GET /api/users HTTP/1.1" 200 OK
+INFO:     172.20.0.1:41986 - "GET /api/shifts HTTP/1.1" 200 OK
+INFO:     172.20.0.1:42000 - "GET /api/summary HTTP/1.1" 200 OK
+INFO:     172.20.0.1:42000 - "GET /api/summary HTTP/1.1" 200 OK
+INFO:     172.20.0.1:42000 - "GET /api/shifts?start=2025-11-20&end=2025-12-03 HTTP/1.1" 200 OK
+INFO:     172.20.0.1:42000 - "GET /api/shifts?start=2025-11-20&end=2025-12-03 HTTP/1.1" 200 OK
+INFO:     172.20.0.1:41986 - "GET /api/users HTTP/1.1" 200 OK
+INFO:     172.20.0.1:41982 - "GET /api/shifts HTTP/1.1" 200 OK
+INFO:     172.20.0.1:41986 - "GET /api/users HTTP/1.1" 200 OK
+INFO:     172.20.0.1:41982 - "GET /api/shifts HTTP/1.1" 200 OK
+INFO:     172.20.0.1:41174 - "POST /api/users HTTP/1.1" 200 OK
+INFO:     172.20.0.1:41174 - "GET /api/users HTTP/1.1" 200 OK
+INFO:     172.20.0.1:41178 - "GET /api/shifts HTTP/1.1" 200 OK
+INFO:     172.20.0.1:41178 - "GET /api/shifts?start=2025-11-20&end=2025-12-03 HTTP/1.1" 200 OK
+INFO:     172.20.0.1:41178 - "GET /api/shifts?start=2025-11-20&end=2025-12-03 HTTP/1.1" 200 OK
+INFO:     172.20.0.1:41178 - "GET /api/users HTTP/1.1" 200 OK
+INFO:     172.20.0.1:41178 - "GET /api/shifts HTTP/1.1" 200 OK
+INFO:     172.20.0.1:41182 - "GET /api/users HTTP/1.1" 200 OK
+INFO:     172.20.0.1:41178 - "GET /api/shifts HTTP/1.1" 200 OK
+INFO:     172.20.0.1:41188 - "POST /api/shifts HTTP/1.1" 200 OK
+INFO:     172.20.0.1:41188 - "GET /api/shifts HTTP/1.1" 200 OK
+INFO:     172.20.0.1:43994 - "GET /api/users HTTP/1.1" 200 OK
+INFO:     172.20.0.1:44000 - "GET /api/shifts?start=2025-11-20&end=2025-12-03 HTTP/1.1" 200 OK
+INFO:     172.20.0.1:44000 - "GET /api/shifts?start=2025-11-20&end=2025-12-03 HTTP/1.1" 200 OK
+INFO:     172.20.0.1:56950 - "GET /api/summary HTTP/1.1" 200 OK
+INFO:     172.20.0.1:56950 - "GET /api/summary HTTP/1.1" 200 OK
+INFO:     172.20.0.1:56950 - "OPTIONS /api/auth/logout HTTP/1.1" 200 OK
+INFO:     172.20.0.1:56950 - "POST /api/auth/logout HTTP/1.1" 200 OK
+INFO:     172.20.0.1:56964 - "OPTIONS /api/auth/login HTTP/1.1" 200 OK
+INFO:     172.20.0.1:56964 - "POST /api/auth/login HTTP/1.1" 200 OK
+INFO:     172.20.0.1:56964 - "GET /api/auth/me HTTP/1.1" 200 OK
+INFO:     172.20.0.1:37164 - "GET /api/summary HTTP/1.1" 200 OK
+INFO:     172.20.0.1:37164 - "GET /api/summary HTTP/1.1" 200 OK
+INFO:     172.20.0.1:37164 - "GET /api/shifts?start=2025-11-20&end=2025-12-03 HTTP/1.1" 200 OK
+INFO:     172.20.0.1:37164 - "GET /api/shifts?start=2025-11-20&end=2025-12-03 HTTP/1.1" 200 OK
+INFO:     172.20.0.1:37172 - "GET /api/summary HTTP/1.1" 200 OK
+INFO:     172.20.0.1:37172 - "GET /api/summary HTTP/1.1" 200 OK
+INFO:     172.20.0.1:56106 - "GET /api/shifts?start=2025-11-20&end=2025-12-03 HTTP/1.1" 200 OK
+INFO:     172.20.0.1:56118 - "GET /api/shifts?start=2025-11-20&end=2025-12-03 HTTP/1.1" 200 OK
+INFO:     172.20.0.1:56106 - "GET /api/summary HTTP/1.1" 200 OK
+INFO:     172.20.0.1:56106 - "GET /api/summary HTTP/1.1" 200 OK
+INFO:     172.20.0.1:56118 - "POST /api/auth/logout HTTP/1.1" 200 OK
+INFO:     172.20.0.1:56132 - "POST /api/auth/login HTTP/1.1" 200 OK
+INFO:     172.20.0.1:56132 - "GET /api/auth/me HTTP/1.1" 200 OK
+INFO:     172.20.0.1:56132 - "GET /api/summary HTTP/1.1" 200 OK
+INFO:     172.20.0.1:56132 - "GET /api/summary HTTP/1.1" 200 OK
+INFO:     172.20.0.1:52124 - "GET /api/shifts?start=2025-11-20&end=2025-12-03 HTTP/1.1" 200 OK
+INFO:     172.20.0.1:52124 - "GET /api/shifts?start=2025-11-20&end=2025-12-03 HTTP/1.1" 200 OK
+INFO:     172.20.0.1:44778 - "GET /api/summary HTTP/1.1" 200 OK
+INFO:     172.20.0.1:44778 - "GET /api/summary HTTP/1.1" 200 OK
+INFO:     172.20.0.1:44778 - "POST /api/auth/logout HTTP/1.1" 200 OK
+INFO:     172.20.0.1:57586 - "POST /api/auth/login HTTP/1.1" 200 OK
+INFO:     172.20.0.1:57586 - "GET /api/auth/me HTTP/1.1" 200 OK
+INFO:     172.20.0.1:57586 - "GET /api/summary HTTP/1.1" 200 OK
+INFO:     172.20.0.1:57586 - "GET /api/summary HTTP/1.1" 200 OK
+INFO:     172.20.0.1:57586 - "GET /api/users HTTP/1.1" 200 OK
+INFO:     172.20.0.1:57596 - "GET /api/shifts HTTP/1.1" 200 OK
+INFO:     172.20.0.1:57586 - "GET /api/users HTTP/1.1" 200 OK
+INFO:     172.20.0.1:57596 - "GET /api/shifts HTTP/1.1" 200 OK
